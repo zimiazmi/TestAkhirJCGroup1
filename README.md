@@ -1,0 +1,10 @@
+# TestAkhirJCGroup1
+ini repo untuk tugas akhir JC 
+==========================================
+MANAGEMENT ABSEN POINT
+MANAGEMENT JABATAN
+MANAGEMENT SHIFTING
+MANAGEMENT JADWAL
+MANAGEMENT KALENDER
+MANAGEMENT ATURAN CUTI
+MANAGEMENT DAY OFF// test nampilin aja
