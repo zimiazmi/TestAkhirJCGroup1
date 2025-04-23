@@ -1,5 +1,7 @@
+@Login
 Feature: Login
 
+  @Positive
   Scenario Outline: Login test with valid credentials
     Given I am on the login page
     When I enter email "<email>" and password "<password>"
