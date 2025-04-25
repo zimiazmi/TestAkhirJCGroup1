@@ -17,8 +17,16 @@ import com.juaracoding.tugasakhir.utils.DriverSingleton;
 import com.juaracoding.tugasakhir.utils.WaitUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Wait;
+import org.testng.Assert;
+
+import java.util.List;
+import java.util.Map;
+
 
 public class AbsenPointSteps {
 
@@ -45,6 +53,11 @@ public class AbsenPointSteps {
     @When("I input location point data with name {string} , latitude {double} , longitude {double} , radius {int} , description {string}")
     public void i_input_location_point_data_with_name_latitude_longitude_radius_description(String name, double latitude, double longitude, int radius, String description){
         absenPoint.clickButtonTambahkan();
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getKolomName(), 5);
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getKolomLatitude(), 5);
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getKolomLongitude(), 5);
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getKolomMaxRadius(), 5);
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getKolomDescription(), 5);
         absenPoint.fillLocationPointActions(name, latitude, longitude, radius, description);
     }
 
@@ -52,4 +65,53 @@ public class AbsenPointSteps {
     public void i_click_the_add_button(){
         absenPoint.clickButtonTambah();
     }
+
+    @When("I enter {string} in search column")
+    public void i_enter_the_name_in_search_column(String name){
+        absenPoint.fillColumnSearch(name);
+    }
+
+    @And("I click the search button")
+    public void I_click_the_search_button(){
+        absenPoint.clickButtonSearch();
+    }
+
+    @Then("I should see a row with:")
+    public void i_should_see_a_row_with(io.cucumber.datatable.DataTable dataTable) {
+        List<List<String>> data = dataTable.asLists(String.class);
+        String expectedName = data.get(1).get(0);
+        String expectedLatitude = data.get(1).get(1);;
+        String expectedLongitude = data.get(1).get(2);
+        String expectedRadius = data.get(1).get(3);
+        String expectedDescription = data.get(1).get(4);
+
+        List<WebElement> cells = absenPoint.getCellsFromRow(expectedName);
+
+        Assert.assertEquals(expectedName, cells.get(0).getText());
+        Assert.assertEquals(expectedLatitude, absenPoint.getLatitudeDataSearch());
+        Assert.assertEquals(expectedLongitude, cells.get(2).getText());
+        Assert.assertEquals(expectedRadius, cells.get(3).getText());
+        Assert.assertEquals(expectedDescription, cells.get(4).getText());
+    }
+
+    @And("I update absen point data to:")
+    public void i_update_absen_point_data_to(io.cucumber.datatable.DataTable dataTable) {
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getThreeDot(), 10);
+        absenPoint.clickThreeDot();
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getButtonEdit(), 10);
+        absenPoint.clickEditButton();
+
+        List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
+        Map<String, String> data = rows.get(0);
+
+        absenPoint.updateName(data.get("Name"));
+        absenPoint.updateLatitude(data.get("Latitude"));
+        absenPoint.updateLongitude(data.get("Longitude"));
+        absenPoint.updateRadius(data.get("Radius"));
+        absenPoint.updateDescription(data.get("Description"));
+
+        absenPoint.clickButtonSimpan();
+    }
+
+
 }

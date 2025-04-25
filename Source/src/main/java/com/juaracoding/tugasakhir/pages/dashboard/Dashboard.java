@@ -21,6 +21,9 @@ import static com.juaracoding.tugasakhir.utils.DriverSingleton.driver;
 
 public class Dashboard {
 
+    @FindBy(xpath = "//*[@class='MuiTypography-root MuiTypography-body1 css-1ar04jk']")
+    WebElement dashboardMenu;
+
     @FindBy(xpath = "(//p[@class='MuiTypography-root MuiTypography-body1 css-1ub5lza'])[3]")
     WebElement managementMenu;
 
@@ -32,6 +35,10 @@ public class Dashboard {
 
     public Dashboard(WebDriver driver){
         PageFactory.initElements(driver, this);
+    }
+
+    public String getTextDashboardMenu(){
+        return dashboardMenu.getText();
     }
 
     public void goToManagementMenu(){

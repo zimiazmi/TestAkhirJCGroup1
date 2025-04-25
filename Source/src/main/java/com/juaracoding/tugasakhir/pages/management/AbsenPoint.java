@@ -12,6 +12,7 @@ Version 1.0
 */
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -19,6 +20,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.time.Duration;
+import java.util.List;
+
+import static com.juaracoding.tugasakhir.utils.DriverSingleton.driver;
 
 public class AbsenPoint {
 
@@ -60,6 +64,21 @@ public class AbsenPoint {
     @FindBy(xpath = "//button[text()='Batal']")
     WebElement buttonBatal;
 
+    @FindBy(xpath = "//h6[@class='MuiTypography-root MuiTypography-h6 css-lbx4ee']")
+    WebElement latitudeDataSearch;
+
+    @FindBy(xpath = "//*[@class='feather feather-more-vertical ']")
+    WebElement threeDot;
+
+    @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[1]")
+    WebElement buttonEdit;
+
+    @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[2]")
+    WebElement buttonDelete;
+
+    @FindBy(xpath = "//button[text()='Simpan']")
+    WebElement buttonSimpan;
+
     public AbsenPoint(WebDriver driver){
         actions = new Actions(driver);
         PageFactory.initElements(driver, this);
@@ -67,6 +86,38 @@ public class AbsenPoint {
 
     public String getHeaderAbsenPoint(){
         return headerAbsenPoint.getText();
+    }
+
+    public String getLatitudeDataSearch(){
+        return latitudeDataSearch.getText();
+    }
+
+    public WebElement getKolomName() {
+        return kolomName;
+    }
+
+    public WebElement getKolomLatitude() {
+        return kolomLatitude;
+    }
+
+    public WebElement getKolomLongitude() {
+        return kolomLongitude;
+    }
+
+    public WebElement getKolomMaxRadius() {
+        return kolomMaxRadius;
+    }
+
+    public WebElement getKolomDescription() {
+        return kolomDescription;
+    }
+
+    public WebElement getThreeDot() {
+        return threeDot;
+    }
+
+    public WebElement getButtonEdit() {
+        return buttonEdit;
     }
 
     public void fillColumnSearch(String name){
@@ -103,8 +154,61 @@ public class AbsenPoint {
         buttonTambah.click();
     }
 
+    public void clickButtonSimpan(){
+        buttonSimpan.click();
+    }
+
     public void clickButtonBatal(){
         buttonBatal.click();
+    }
+
+    // Dapatkan seluruh row yang match nama
+    public WebElement getRowByName(String name) {
+        return driver.findElement(
+                By.xpath("//tr[.//h6[text()='" + name + "']]")
+        );
+    }
+
+    public List<WebElement> getCellsFromRow(String name) {
+        WebElement row = getRowByName(name);
+        return row.findElements(By.tagName("td"));
+    }
+
+    public void clickThreeDot(){
+        threeDot.click();
+    }
+
+    public void clickEditButton(){
+        buttonEdit.click();
+    }
+
+    public void clickDeleteButton(){
+        buttonDelete.click();
+    }
+
+    public void updateName(String name){
+        kolomName.clear();
+        kolomName.sendKeys(name);
+    }
+
+    public void updateLatitude(String latitude){
+        kolomLatitude.clear();
+        kolomLatitude.sendKeys(latitude);
+    }
+
+    public void updateLongitude(String longitude){
+        kolomLongitude.clear();
+        kolomLongitude.sendKeys(longitude);
+    }
+
+    public void updateRadius(String radius){
+        kolomMaxRadius.clear();
+        kolomMaxRadius.sendKeys(radius);
+    }
+
+    public void updateDescription(String description){
+        kolomDescription.clear();
+        kolomDescription.sendKeys(description);
     }
 
 
