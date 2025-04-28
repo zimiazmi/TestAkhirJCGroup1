@@ -21,8 +21,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
+
 
 import java.util.List;
 import java.util.Map;
@@ -112,6 +112,15 @@ public class AbsenPointSteps {
 
         absenPoint.clickButtonSimpan();
     }
+
+    @Then("I delete absen point data")
+    public void i_delete_absen_point_data(){
+        absenPoint.clickThreeDot();
+        absenPoint.waitForActionMenu();
+        absenPoint.clickDeleteButton();
+        absenPoint.clickConfirmDeleteYes();
+    }
+
 
 
 }

@@ -83,6 +83,12 @@ public class AbsenPoint {
     @FindBy(xpath = "//button[text()='Simpan']")
     WebElement buttonSimpan;
 
+    @FindBy(xpath = "//button[@type='submit' and text()='Ya']")
+    WebElement buttonDeleteConfirmYes;
+
+    @FindBy(xpath = "//button[@type='button' and text()='Tidak']")
+    WebElement buttonDeleteConfirmNo;
+
     public AbsenPoint(WebDriver driver){
         actions = new Actions(driver);
         PageFactory.initElements(driver, this);
@@ -208,8 +214,19 @@ public class AbsenPoint {
         editbuttonElement.click();
     }
 
-    public void clickDeleteButton(){
-        buttonDelete.click();
+//    public void clickDeleteButton(){
+//        buttonDelete.click();
+//    }
+
+    public void clickDeleteButton() {
+        By deleteButtonLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[2]");
+        WaitUtils.waitForElementPresence(driver, deleteButtonLocator, 20);
+        WebElement deletebuttonElement = WaitUtils.waitForElementToBeClickableBy(driver, deleteButtonLocator, 20);
+        deletebuttonElement.click();
+    }
+
+    public void clickConfirmDeleteYes(){
+        buttonDeleteConfirmYes.click();
     }
 
     public void updateName(String name){

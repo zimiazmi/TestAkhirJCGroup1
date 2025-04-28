@@ -14,9 +14,9 @@
       And I click the add button
 
       Examples:
-       | name    | latitude  | longitude  | radius | description|
-       | testRio1 | -6.240723 | 106.835780 | 100    | test       |
-       | testRio2 | -6.240723 | 106.835780 | 100    | test       |
+       | name        | latitude  | longitude  | radius | description|
+       | AbsenPoint1 | -6.240723 | 106.835780 | 100    | test       |
+       | AbsenPoint2 | -6.240723 | 106.835780 | 100    | test       |
 
     @Positive
     Scenario Outline: Successfully searching absen point data after adding
@@ -28,9 +28,9 @@
         | <name>  | <latitude> |<longitude> | <radius> | <description> |
 
       Examples:
-        | name    | latitude  | longitude   | radius | description |
-        | testRio1 | -6.240723 | 106.835780  | 100    | test        |
-        | testRio2 | -6.240723 | 106.835780  | 100    | test        |
+        | name        | latitude  | longitude  | radius | description|
+        | AbsenPoint1 | -6.240723 | 106.835780 | 100    | test       |
+        | AbsenPoint2 | -6.240723 | 106.835780 | 100    | test       |
 
     @Positive
     Scenario Outline: Successfully edit existing absen point data
@@ -42,6 +42,16 @@
         | <newName> | <newLatitude> | <newLongitude> | <newRadius> | <newDescription> |
 
       Examples:
-        | name     | newName     | newLatitude | newLongitude | newRadius | newDescription |
-        | testRio1 | testRioNew1  | -6.123456   | 106.123456   | 120       | updated        |
-        | testRio2 | testRioNew2  | -6.123456   | 106.123456   | 120       | updated        |
+        | name        | newName            | newLatitude | newLongitude | newRadius | newDescription |
+        | AbsenPoint1 | AbsenPoint1Update  | -6.123456   | 106.123456   | 120       | updated        |
+
+    @Positive
+    Scenario Outline: Successfully delete existing absen point data
+      Given I am on the absen point page
+      When I enter "<name>" in search column
+      And I click the search button
+      Then I delete absen point data
+
+      Examples:
+        | name        |
+        | AbsenPoint2 |
