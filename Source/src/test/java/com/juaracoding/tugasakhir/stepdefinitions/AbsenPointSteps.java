@@ -96,9 +96,9 @@ public class AbsenPointSteps {
 
     @And("I update absen point data to:")
     public void i_update_absen_point_data_to(io.cucumber.datatable.DataTable dataTable) {
-        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getThreeDot(), 10);
+
         absenPoint.clickThreeDot();
-        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getButtonEdit(), 10);
+        absenPoint.waitForActionMenu();
         absenPoint.clickEditButton();
 
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);

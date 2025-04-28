@@ -12,12 +12,16 @@ Version 1.0
 */
 
 
+import com.juaracoding.tugasakhir.utils.WaitUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
@@ -174,12 +178,34 @@ public class AbsenPoint {
         return row.findElements(By.tagName("td"));
     }
 
-    public void clickThreeDot(){
-        threeDot.click();
+//    public void clickThreeDot(){
+//        WaitUtils.waitForElementToBeClickable(driver, getThreeDot(), 20);
+//        threeDot.click();
+//    }
+
+    public void clickThreeDot() {
+        By threeDotLocator = By.xpath("//*[@class='feather feather-more-vertical ']");
+        WaitUtils.waitForElementPresence(driver, threeDotLocator, 20);
+        WebElement threeDotElement = WaitUtils.waitForElementToBeClickableBy(driver, threeDotLocator, 20);
+        threeDotElement.click();
     }
 
-    public void clickEditButton(){
-        buttonEdit.click();
+//    public void clickEditButton(){
+//        WaitUtils.waitForElementToBeClickable(driver, getButtonEdit(), 20);
+//        buttonEdit.click();
+//    }
+
+    public void waitForActionMenu() {
+        By actionMenuLocator = By.id("card-actions-menu");
+        WaitUtils.waitForElementPresence(driver, actionMenuLocator, 20);
+    }
+
+
+    public void clickEditButton() {
+        By editButtonLocator = By.xpath("//li[@role='menuitem' and normalize-space(text())='Edit']");
+        WaitUtils.waitForElementPresence(driver, editButtonLocator, 20);
+        WebElement editbuttonElement = WaitUtils.waitForElementToBeClickableBy(driver, editButtonLocator, 20);
+        editbuttonElement.click();
     }
 
     public void clickDeleteButton(){
