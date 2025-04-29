@@ -14,7 +14,6 @@ Version 1.0
 
 import com.juaracoding.tugasakhir.utils.WaitUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -122,13 +121,6 @@ public class AbsenPoint {
         return kolomDescription;
     }
 
-    public WebElement getThreeDot() {
-        return threeDot;
-    }
-
-    public WebElement getButtonEdit() {
-        return buttonEdit;
-    }
 
     public void fillColumnSearch(String name){
         kolomSearch.sendKeys(name);
@@ -184,42 +176,35 @@ public class AbsenPoint {
         return row.findElements(By.tagName("td"));
     }
 
-//    public void clickThreeDot(){
-//        WaitUtils.waitForElementToBeClickable(driver, getThreeDot(), 20);
-//        threeDot.click();
-//    }
+    public void waitForSubmitToFinish(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        By loadingLocator = By.xpath("//*[contains(text(),'Submitting...')]");
 
-    public void clickThreeDot() {
-        By threeDotLocator = By.xpath("//*[@class='feather feather-more-vertical ']");
-        WaitUtils.waitForElementPresence(driver, threeDotLocator, 20);
-        WebElement threeDotElement = WaitUtils.waitForElementToBeClickableBy(driver, threeDotLocator, 20);
-        threeDotElement.click();
+        // Tunggu loading submitting hilang
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingLocator));
     }
 
-//    public void clickEditButton(){
-//        WaitUtils.waitForElementToBeClickable(driver, getButtonEdit(), 20);
-//        buttonEdit.click();
-//    }
+    public void clickThreeDot() {
+        By threeDotLocator = By.xpath("//*[@id='__next']/div/div/div/div[1]/div/div/div/div[2]/div/table/tbody/tr[1]/td[6]/div/div/button");
+        WaitUtils.waitForElementPresence(driver, threeDotLocator, 60);
+        WebElement threeDotElement = WaitUtils.waitForElementToBeClickableBy(driver, threeDotLocator, 60);
+        threeDotElement.click();
+    }
 
     public void waitForActionMenu() {
         By actionMenuLocator = By.id("card-actions-menu");
         WaitUtils.waitForElementPresence(driver, actionMenuLocator, 20);
     }
 
-
     public void clickEditButton() {
-        By editButtonLocator = By.xpath("//li[@role='menuitem' and normalize-space(text())='Edit']");
+        By editButtonLocator = By.xpath("/html/body/div[3]/div[3]/ul/li[1]");
         WaitUtils.waitForElementPresence(driver, editButtonLocator, 20);
         WebElement editbuttonElement = WaitUtils.waitForElementToBeClickableBy(driver, editButtonLocator, 20);
         editbuttonElement.click();
     }
 
-//    public void clickDeleteButton(){
-//        buttonDelete.click();
-//    }
-
     public void clickDeleteButton() {
-        By deleteButtonLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[2]");
+        By deleteButtonLocator = By.xpath("/html/body/div[3]/div[3]/ul/li[2]");
         WaitUtils.waitForElementPresence(driver, deleteButtonLocator, 20);
         WebElement deletebuttonElement = WaitUtils.waitForElementToBeClickableBy(driver, deleteButtonLocator, 20);
         deletebuttonElement.click();

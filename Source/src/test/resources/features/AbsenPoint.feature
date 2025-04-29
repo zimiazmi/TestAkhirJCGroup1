@@ -15,8 +15,8 @@
 
       Examples:
        | name        | latitude  | longitude  | radius | description|
-       | AbsenPoint1 | -6.240723 | 106.835780 | 100    | test       |
-       | AbsenPoint2 | -6.240723 | 106.835780 | 100    | test       |
+       | AbsenPoint1 | -6.240723 | 106.835780 | 100    | test1      |
+       | AbsenPoint2 | -6.240723 | 106.835780 | 110    | test2      |
 
     @Positive
     Scenario Outline: Successfully searching absen point data after adding
@@ -29,8 +29,8 @@
 
       Examples:
         | name        | latitude  | longitude  | radius | description|
-        | AbsenPoint1 | -6.240723 | 106.835780 | 100    | test       |
-        | AbsenPoint2 | -6.240723 | 106.835780 | 100    | test       |
+        | AbsenPoint1 | -6.240723 | 106.835780 | 100    | test1      |
+        | AbsenPoint2 | -6.240723 | 106.835780 | 110    | test2      |
 
     @Positive
     Scenario Outline: Successfully edit existing absen point data
@@ -43,7 +43,7 @@
 
       Examples:
         | name        | newName            | newLatitude | newLongitude | newRadius | newDescription |
-        | AbsenPoint1 | AbsenPoint1Update  | -6.123456   | 106.123456   | 120       | updated        |
+        | AbsenPoint1 | AbsenPoint1Update  | -6.123456   | 106.123456   | 120       | updated1       |
 
     @Positive
     Scenario Outline: Successfully delete existing absen point data

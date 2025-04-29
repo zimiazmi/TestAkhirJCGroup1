@@ -64,6 +64,7 @@ public class AbsenPointSteps {
     @And("I click the add button")
     public void i_click_the_add_button(){
         absenPoint.clickButtonTambah();
+        absenPoint.waitForSubmitToFinish(driver);
     }
 
     @When("I enter {string} in search column")
@@ -111,14 +112,15 @@ public class AbsenPointSteps {
         absenPoint.updateDescription(data.get("Description"));
 
         absenPoint.clickButtonSimpan();
+        absenPoint.waitForSubmitToFinish(driver);
     }
 
     @Then("I delete absen point data")
     public void i_delete_absen_point_data(){
         absenPoint.clickThreeDot();
-        absenPoint.waitForActionMenu();
         absenPoint.clickDeleteButton();
         absenPoint.clickConfirmDeleteYes();
+        absenPoint.waitForSubmitToFinish(driver);
     }
 
 

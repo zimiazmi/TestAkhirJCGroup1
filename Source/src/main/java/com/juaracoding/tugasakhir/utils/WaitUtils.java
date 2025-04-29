@@ -42,9 +42,9 @@ public class WaitUtils {
 
 
         // Wait sampai element visible
-    public static WebElement waitForVisibility(WebDriver driver, WebElement element, int timeoutSeconds) {
+    public static WebElement waitForVisibility(WebDriver driver, By locator, int timeoutSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-        return wait.until(ExpectedConditions.visibilityOf(element));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     // Cek apakah element muncul dalam waktu tertentu
