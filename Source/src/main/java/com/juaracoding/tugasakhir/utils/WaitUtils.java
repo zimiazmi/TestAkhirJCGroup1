@@ -12,9 +12,7 @@ Version 1.0
 */
 
 
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -28,10 +26,25 @@ public class WaitUtils {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    // Wait sampai element visible
-    public static WebElement waitForVisibility(WebDriver driver, WebElement element, int timeoutSeconds) {
+    public static WebElement waitForElementToBeClickableBy(WebDriver driver, By locator, int timeoutSeconds) {
+        int attempts = 0;
+        while (attempts < 3) { // maksimal 3x retry kalau stale
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+                return wait.until(ExpectedConditions.elementToBeClickable(locator));
+            } catch (StaleElementReferenceException e) {
+                System.out.println("Caught StaleElementReferenceException. Retrying... Attempt " + (attempts + 1));
+                attempts++;
+            }
+        }
+        throw new TimeoutException("Element not clickable after multiple retries due to StaleElementReferenceException");
+    }
+
+
+        // Wait sampai element visible
+    public static WebElement waitForVisibility(WebDriver driver, By locator, int timeoutSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-        return wait.until(ExpectedConditions.visibilityOf(element));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     // Cek apakah element muncul dalam waktu tertentu
@@ -44,5 +57,13 @@ public class WaitUtils {
             return false;
         }
     }
+
+    // Tunggu sampai element hadir di DOM
+    public static WebElement waitForElementPresence(WebDriver driver, By locator, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+
 
 }
