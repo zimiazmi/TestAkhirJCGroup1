@@ -33,6 +33,9 @@ public class Dashboard {
     @FindBy(xpath = "(//p[@class='MuiTypography-root MuiTypography-body1 css-aqx7sf'])[11]")
     WebElement absenPoint;
 
+    @FindBy(xpath = "(//p[@class='MuiTypography-root MuiTypography-body1 css-aqx7sf'])[15]")
+    WebElement kalender;
+
     public Dashboard(WebDriver driver){
         PageFactory.initElements(driver, this);
     }
@@ -49,12 +52,20 @@ public class Dashboard {
         absenPoint.click();
     }
 
+    public void goToKalenderMenu(){
+        kalender.click();
+    }
+
     public void scrollSidebarToBottom() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop = arguments[0].scrollHeight", sidebarManagement);
     }
 
     public WebElement getElemementAbsenPoint(){
         return absenPoint;
+    }
+
+    public WebElement getElementKalender(){
+        return kalender;
     }
 
 
