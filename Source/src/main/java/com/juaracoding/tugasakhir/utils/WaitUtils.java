@@ -64,6 +64,16 @@ public class WaitUtils {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
+    public static void waitForNProgressToFinish(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(driver1 -> {
+            WebElement htmlTag = driver1.findElement(By.tagName("html"));
+            String cls = htmlTag.getAttribute("class");
+            return cls == null || !cls.contains("nprogress-busy");
+        });
+    }
+
+
 
 
 }

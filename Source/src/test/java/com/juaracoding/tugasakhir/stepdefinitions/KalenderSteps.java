@@ -46,6 +46,8 @@ public class KalenderSteps {
         dashboard.scrollSidebarToBottom();
         WaitUtils.waitForElementToBeClickable(driver, dashboard.getElementKalender(), 10);
         dashboard.goToKalenderMenu();
+        WaitUtils.waitForNProgressToFinish(driver);
+
     }
 
     @When("I input kalender data with kalender unit {string}")
@@ -68,6 +70,7 @@ public class KalenderSteps {
     @And("I click the search button kalender")
     public void i_click_the_Search_button_kalender(){
         kalender.clickButtonSearch();
+        WaitUtils.waitForNProgressToFinish(driver);
     }
 
     @Then("I should see a row {string}")

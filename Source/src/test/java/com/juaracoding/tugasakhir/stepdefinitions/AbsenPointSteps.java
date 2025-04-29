@@ -44,10 +44,10 @@ public class AbsenPointSteps {
     @Given("I am on the absen point page")
     public void i_am_on_the_absen_point_page(){
         dashboard.goToManagementMenu();
-        //butuh scrol
         dashboard.scrollSidebarToBottom();
         WaitUtils.waitForElementToBeClickable(driver, dashboard.getElemementAbsenPoint(), 10);
         dashboard.goToAbsenPointMenu();
+        WaitUtils.waitForNProgressToFinish(driver);
     }
 
     @When("I input location point data with name {string} , latitude {double} , longitude {double} , radius {int} , description {string}")
@@ -75,6 +75,7 @@ public class AbsenPointSteps {
     @And("I click the search button")
     public void I_click_the_search_button(){
         absenPoint.clickButtonSearch();
+        WaitUtils.waitForNProgressToFinish(driver);
     }
 
     @Then("I should see a row with:")
