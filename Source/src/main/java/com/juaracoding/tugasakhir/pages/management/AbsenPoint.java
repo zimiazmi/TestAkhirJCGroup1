@@ -204,7 +204,6 @@ public class AbsenPoint {
 
     public void clickConfirmDeleteYes(){
         buttonDeleteConfirmYes.click();
-        WaitUtils.waitForSubmitToFinish(driver);
     }
 
     public void updateName(String name){

@@ -22,6 +22,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -165,8 +166,11 @@ public class Kalender {
         threeDotElement.click();
     }
 
-    public void clickView(){
-        buttonView.click();
+    public void clickView() {
+        By viewLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[1]");
+        WaitUtils.waitForElementPresence(driver, viewLocator, 60);
+        WebElement viewElement = WaitUtils.waitForElementToBeClickableBy(driver, viewLocator, 60);
+        viewElement.click();
     }
 
     public void clickThreeDotView(){
@@ -219,7 +223,18 @@ public class Kalender {
 
     public void clickConfirmDeleteYes(){
         buttonDeleteConfirmYes.click();
-        WaitUtils.waitForSubmitToFinish(driver);
+    }
+
+    public String getTanggalView(){
+        return viewTanggal.getText();
+    }
+
+    public String getTipeView(){
+        return viewTipe.getText();
+    }
+
+    public String getDeskripsiView(){
+        return viewDeskripsi.getText();
     }
 
 

@@ -51,3 +51,15 @@ Feature: Kalender
     Examples:
       | name            |
       | Kalender Unit 2 |
+
+  @Positive
+  Scenario Outline: Successfully view kalender
+    Given I am on the kalender page
+    When I enter "<name>" in search column kalender
+    And I click the search button kalender
+    And I view kalender data
+    Then I should see detail data kalender with tanggal "<tanggal>", tipe "<tipe>", deskripsi "<deskripsi>"
+
+    Examples:
+      | name               | tanggal     | tipe         | deskripsi     |
+      | Libur Cuti Bersama | 28 Sep 2024 | Cuti Bersama | Libur Lebaran |

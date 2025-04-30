@@ -97,5 +97,22 @@ public class KalenderSteps {
         WaitUtils.waitForSubmitToFinish(driver);
     }
 
+    @And("I view kalender data")
+    public void i_view_kalender_data(){
+        kalender.clickThreeDot();
+        kalender.clickView();
+        WaitUtils.waitForNProgressToFinish(driver);
+    }
 
+    @Then("I should see detail data kalender with tanggal {string}, tipe {string}, deskripsi {string}")
+    public void i_should_see_detail_data_kalender_with(String tanggal, String tipe, String deskripsi){
+        String tanggalActual = kalender.getTanggalView();
+        String tipeActual = kalender.getTipeView();
+        String deskripsiActual = kalender.getDeskripsiView();
+
+        Assert.assertEquals(tanggalActual, tanggal);
+        Assert.assertEquals(tipeActual, tipe);
+        Assert.assertEquals(deskripsiActual, deskripsi);
+
+    }
 }
