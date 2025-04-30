@@ -59,7 +59,7 @@ public class KalenderSteps {
     @And("I click the add button kalender")
     public void i_click_the_add_button_Kalender(){
         kalender.clickTambah();
-        kalender.waitForSubmitToFinish(driver);
+        WaitUtils.waitForSubmitToFinish(driver);
     }
 
     @Given("I enter {string} in search column kalender")
@@ -77,6 +77,24 @@ public class KalenderSteps {
     public void i_should_see_a_row(String expected){
         String actual = kalender.getNameKalenderUnit();
         Assert.assertEquals(actual, expected);
+    }
+
+    @And("I edit kalender unit to {string}")
+    public void i_edit_kalender_unit_to(String newKalenderUnit){
+        kalender.clickThreeDot();
+        kalender.clickEditButton();
+        kalender.updateKalenderUnit(newKalenderUnit);
+        kalender.clickSimpan();
+        WaitUtils.waitForSubmitToFinish(driver);
+        WaitUtils.waitForNProgressToFinish(driver);
+    }
+
+    @Then("I delete kalender data")
+    public void i_delete_kalender_data(){
+        kalender.clickThreeDot();
+        kalender.clickDeleteButton();
+        kalender.clickConfirmDeleteYes();
+        WaitUtils.waitForSubmitToFinish(driver);
     }
 
 

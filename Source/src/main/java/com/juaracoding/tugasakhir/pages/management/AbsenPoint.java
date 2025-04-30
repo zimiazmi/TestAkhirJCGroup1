@@ -176,14 +176,6 @@ public class AbsenPoint {
         return row.findElements(By.tagName("td"));
     }
 
-    public void waitForSubmitToFinish(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        By loadingLocator = By.xpath("//*[contains(text(),'Submitting...')]");
-
-        // Tunggu loading submitting hilang
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingLocator));
-    }
-
     public void clickThreeDot() {
         By threeDotLocator = By.xpath("//*[@id='__next']/div/div/div/div[1]/div/div/div/div[2]/div/table/tbody/tr[1]/td[6]/div/div/button");
         WaitUtils.waitForElementPresence(driver, threeDotLocator, 60);
@@ -212,6 +204,7 @@ public class AbsenPoint {
 
     public void clickConfirmDeleteYes(){
         buttonDeleteConfirmYes.click();
+        WaitUtils.waitForSubmitToFinish(driver);
     }
 
     public void updateName(String name){
