@@ -24,7 +24,7 @@ public class ChromeManager {
     public static WebDriver buildDriver(){
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
 
         options.addArguments("--disable-blink-features=AutomationControlled");
         options.addArguments("--disable-password-generation");

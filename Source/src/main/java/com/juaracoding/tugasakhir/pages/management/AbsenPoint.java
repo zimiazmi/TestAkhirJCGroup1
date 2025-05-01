@@ -121,6 +121,10 @@ public class AbsenPoint {
         return kolomDescription;
     }
 
+    public WebElement getButtonDeleteConfirmYes(){
+        return buttonDeleteConfirmYes;
+    }
+
 
     public void fillColumnSearch(String name){
         kolomSearch.sendKeys(name);

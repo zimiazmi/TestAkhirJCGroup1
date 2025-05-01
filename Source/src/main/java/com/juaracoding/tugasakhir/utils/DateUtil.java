@@ -12,8 +12,10 @@ Version 1.0
 */
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateUtil {
 
@@ -25,4 +27,16 @@ public class DateUtil {
         return new SimpleDateFormat("ddMMyyyyHHmmss").format(new Date());
     }
 
+    public static String formatTanggal(String inputDate) {
+        try {
+            SimpleDateFormat originalFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+            SimpleDateFormat targetFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+            Date date = originalFormat.parse(inputDate);
+            return targetFormat.format(date);
+        } catch (ParseException e) {
+            System.err.println("Gagal parse tanggal: " + inputDate);
+            return inputDate;
+        }
+    }
 }
+

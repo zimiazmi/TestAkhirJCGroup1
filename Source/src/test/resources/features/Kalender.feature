@@ -37,6 +37,10 @@ Feature: Kalender
     And I click the search button kalender
     And I edit kalender unit to "<newKalenderUnit>"
 
+    When I enter "<newKalenderUnit>" in search column kalender
+    And I click the search button kalender
+    Then I should see a row "<newKalenderUnit>"
+
     Examples:
       | name            | newKalenderUnit        |
       | Kalender Unit 1 | Kalender Unit 1 Edited |
@@ -53,13 +57,16 @@ Feature: Kalender
       | Kalender Unit 2 |
 
   @Positive
-  Scenario Outline: Successfully view kalender
+  Scenario Outline: Successfully edit and view detail kalender
     Given I am on the kalender page
     When I enter "<name>" in search column kalender
     And I click the search button kalender
     And I view kalender data
-    Then I should see detail data kalender with tanggal "<tanggal>", tipe "<tipe>", deskripsi "<deskripsi>"
+    And I edit detail data kalender to newTanggal "<newTanggal>", newTipe "<newTipe>", newDeskripsi "<newDeskripsi>"
+    Then I should see detail data kalender with:
+    | Tanggal      | Tipe      | Deskripsi      |
+    | <newTanggal> | <newTipe> | <newDeskripsi> |
 
     Examples:
-      | name               | tanggal     | tipe         | deskripsi     |
-      | Libur Cuti Bersama | 28 Sep 2024 | Cuti Bersama | Libur Lebaran |
+      | name               | newTanggal | newTipe      | newDeskripsi         |
+      | Libur Cuti Bersama | 09/28/2024 | Cuti Bersama | Libur Lebaran Edited 2 |

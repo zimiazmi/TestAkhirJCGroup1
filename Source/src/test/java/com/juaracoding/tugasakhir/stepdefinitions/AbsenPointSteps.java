@@ -121,6 +121,7 @@ public class AbsenPointSteps {
     public void i_delete_absen_point_data(){
         absenPoint.clickThreeDot();
         absenPoint.clickDeleteButton();
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getButtonDeleteConfirmYes(), 10);
         absenPoint.clickConfirmDeleteYes();
         WaitUtils.waitForSubmitToFinish(driver);
     }

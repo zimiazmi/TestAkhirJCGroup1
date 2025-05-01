@@ -79,7 +79,7 @@ public class Kalender {
     @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[1]")
     WebElement buttonViewEdit;
 
-    @FindBy(xpath = "//*[@id='mui-13']")
+    @FindBy(xpath = "//input[@placeholder='dd/mm/yyyy']")
     WebElement columnTanggal;
 
     @FindBy(xpath = "//div[@id='type']")
@@ -89,7 +89,7 @@ public class Kalender {
     WebElement columnCutiBersama;
 
     @FindBy(xpath = "//li[@data-value='libur_nasional']")
-    WebElement columnLiburNasioal;
+    WebElement columnLiburNasional;
 
     @FindBy(xpath = "//input[@id='description']")
     WebElement columnDescription;
@@ -121,6 +121,8 @@ public class Kalender {
     }
 
     public void fillColumnSearch(String search){
+        kolomSearch.click();
+        kolomSearch.clear();
         kolomSearch.sendKeys(search);
     }
 
@@ -166,6 +168,13 @@ public class Kalender {
         threeDotElement.click();
     }
 
+    public void clickThreeDotView() {
+        By threeDotViewLocator = By.xpath("//*[@id='__next']/div/div/div/div[1]/div/div/div/div[3]/div/table/tbody/tr/td[4]/div/div/button");
+        WaitUtils.waitForElementPresence(driver, threeDotViewLocator, 60);
+        WebElement threeDotViewElement = WaitUtils.waitForElementToBeClickableBy(driver, threeDotViewLocator, 60);
+        threeDotViewElement.click();
+    }
+
     public void clickView() {
         By viewLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[1]");
         WaitUtils.waitForElementPresence(driver, viewLocator, 60);
@@ -173,26 +182,8 @@ public class Kalender {
         viewElement.click();
     }
 
-    public void clickThreeDotView(){
-        threeDotView.click();
-    }
-
-    public void clickEditView(){
-        buttonViewEdit.click();
-    }
-
     public void fillTanggal(String date){
         columnTanggal.sendKeys(date);
-    }
-
-    public void selectTipeCutiBersama(){
-        columnPilihTipeCuti.click();
-        columnCutiBersama.click();
-    }
-
-    public void selectTipeLiburNasional(){
-        columnPilihTipeCuti.click();
-        columnLiburNasioal.click();
     }
 
     public void fillDeskripsi(String desc){
@@ -212,6 +203,13 @@ public class Kalender {
         WaitUtils.waitForElementPresence(driver, editButtonLocator, 20);
         WebElement editbuttonElement = WaitUtils.waitForElementToBeClickableBy(driver, editButtonLocator, 20);
         editbuttonElement.click();
+    }
+
+    public void clickEditViewButton() {
+        By editButtonViewLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[1]");
+        WaitUtils.waitForElementPresence(driver, editButtonViewLocator, 20);
+        WebElement editbuttonViewElement = WaitUtils.waitForElementToBeClickableBy(driver, editButtonViewLocator, 20);
+        editbuttonViewElement.click();
     }
 
     public void clickDeleteButton() {
@@ -236,6 +234,46 @@ public class Kalender {
     public String getDeskripsiView(){
         return viewDeskripsi.getText();
     }
+
+    public WebElement getButtonDeleteConfirmYes(){
+        return buttonDeleteConfirmYes;
+    }
+
+    public WebElement getKolomSearch(){
+        return kolomSearch;
+    }
+
+    public void updateTanggalCuti(String newTanggal, String newTipe, String newDeskripsi) {
+
+        Keys controlKey = OSUtils.isWindows() ? Keys.CONTROL : Keys.COMMAND;
+
+        By tanggalLocator = By.xpath("//input[starts-with(@id, 'mui-')]");
+        WaitUtils.waitForElementPresence(driver, tanggalLocator, 60);
+        WebElement tanggalElement = WaitUtils.waitForElementToBeClickableBy(driver, tanggalLocator, 60);
+        tanggalElement.click();
+        tanggalElement.sendKeys(controlKey + "a");
+        tanggalElement.sendKeys(Keys.DELETE);
+        tanggalElement.sendKeys(newTanggal);
+
+        switch (newTipe.toUpperCase()) {
+            case "CUTI BERSAMA":
+                columnPilihTipeCuti.click();
+                columnCutiBersama.click();
+                break;
+            case "LIBUR NASIONAL":
+                columnPilihTipeCuti.click();
+                columnLiburNasional.click();
+                break;
+            default:
+                System.out.println("Tipe cuti " + newTipe + " tidak valid");
+        }
+
+        columnDescription.sendKeys(controlKey + "a");
+        columnDescription.sendKeys(Keys.DELETE);
+        fillDeskripsi(newDeskripsi);
+
+    }
+
 
 
 
