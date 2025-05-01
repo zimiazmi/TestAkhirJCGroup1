@@ -21,6 +21,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 
 
@@ -44,10 +45,10 @@ public class AbsenPointSteps {
     @Given("I am on the absen point page")
     public void i_am_on_the_absen_point_page(){
         dashboard.goToManagementMenu();
-        //butuh scrol
         dashboard.scrollSidebarToBottom();
         WaitUtils.waitForElementToBeClickable(driver, dashboard.getElemementAbsenPoint(), 10);
         dashboard.goToAbsenPointMenu();
+        WaitUtils.waitForNProgressToFinish(driver);
     }
 
     @When("I input location point data with name {string} , latitude {double} , longitude {double} , radius {int} , description {string}")
@@ -64,7 +65,7 @@ public class AbsenPointSteps {
     @And("I click the add button")
     public void i_click_the_add_button(){
         absenPoint.clickButtonTambah();
-        absenPoint.waitForSubmitToFinish(driver);
+        WaitUtils.waitForSubmitToFinish(driver);
     }
 
     @When("I enter {string} in search column")
@@ -75,6 +76,7 @@ public class AbsenPointSteps {
     @And("I click the search button")
     public void I_click_the_search_button(){
         absenPoint.clickButtonSearch();
+        WaitUtils.waitForNProgressToFinish(driver);
     }
 
     @Then("I should see a row with:")
@@ -112,7 +114,7 @@ public class AbsenPointSteps {
         absenPoint.updateDescription(data.get("Description"));
 
         absenPoint.clickButtonSimpan();
-        absenPoint.waitForSubmitToFinish(driver);
+        WaitUtils.waitForSubmitToFinish(driver);
     }
 
     @Then("I delete absen point data")
@@ -120,7 +122,7 @@ public class AbsenPointSteps {
         absenPoint.clickThreeDot();
         absenPoint.clickDeleteButton();
         absenPoint.clickConfirmDeleteYes();
-        absenPoint.waitForSubmitToFinish(driver);
+        WaitUtils.waitForSubmitToFinish(driver);
     }
 
 

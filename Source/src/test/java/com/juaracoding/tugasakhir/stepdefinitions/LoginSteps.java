@@ -16,6 +16,7 @@ import com.juaracoding.tugasakhir.pages.dashboard.Dashboard;
 import com.juaracoding.tugasakhir.pages.login.LoginPage;
 import com.juaracoding.tugasakhir.utils.Constants;
 import com.juaracoding.tugasakhir.utils.DriverSingleton;
+import com.juaracoding.tugasakhir.utils.WaitUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -53,6 +54,7 @@ public class LoginSteps {
     @And("I click the login button")
     public void i_click_the_login_button(){
         loginPage.clickButtonMasuk();
+        WaitUtils.waitForNProgressToFinish(driver);
     }
 
     @Then("I should see the {string}")

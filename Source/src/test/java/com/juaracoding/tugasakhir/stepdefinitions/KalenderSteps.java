@@ -46,6 +46,8 @@ public class KalenderSteps {
         dashboard.scrollSidebarToBottom();
         WaitUtils.waitForElementToBeClickable(driver, dashboard.getElementKalender(), 10);
         dashboard.goToKalenderMenu();
+        WaitUtils.waitForNProgressToFinish(driver);
+
     }
 
     @When("I input kalender data with kalender unit {string}")
@@ -57,7 +59,7 @@ public class KalenderSteps {
     @And("I click the add button kalender")
     public void i_click_the_add_button_Kalender(){
         kalender.clickTambah();
-        kalender.waitForSubmitToFinish(driver);
+        WaitUtils.waitForSubmitToFinish(driver);
     }
 
     @Given("I enter {string} in search column kalender")
@@ -68,6 +70,7 @@ public class KalenderSteps {
     @And("I click the search button kalender")
     public void i_click_the_Search_button_kalender(){
         kalender.clickButtonSearch();
+        WaitUtils.waitForNProgressToFinish(driver);
     }
 
     @Then("I should see a row {string}")
@@ -76,5 +79,40 @@ public class KalenderSteps {
         Assert.assertEquals(actual, expected);
     }
 
+    @And("I edit kalender unit to {string}")
+    public void i_edit_kalender_unit_to(String newKalenderUnit){
+        kalender.clickThreeDot();
+        kalender.clickEditButton();
+        kalender.updateKalenderUnit(newKalenderUnit);
+        kalender.clickSimpan();
+        WaitUtils.waitForSubmitToFinish(driver);
+        WaitUtils.waitForNProgressToFinish(driver);
+    }
 
+    @Then("I delete kalender data")
+    public void i_delete_kalender_data(){
+        kalender.clickThreeDot();
+        kalender.clickDeleteButton();
+        kalender.clickConfirmDeleteYes();
+        WaitUtils.waitForSubmitToFinish(driver);
+    }
+
+    @And("I view kalender data")
+    public void i_view_kalender_data(){
+        kalender.clickThreeDot();
+        kalender.clickView();
+        WaitUtils.waitForNProgressToFinish(driver);
+    }
+
+    @Then("I should see detail data kalender with tanggal {string}, tipe {string}, deskripsi {string}")
+    public void i_should_see_detail_data_kalender_with(String tanggal, String tipe, String deskripsi){
+        String tanggalActual = kalender.getTanggalView();
+        String tipeActual = kalender.getTipeView();
+        String deskripsiActual = kalender.getDeskripsiView();
+
+        Assert.assertEquals(tanggalActual, tanggal);
+        Assert.assertEquals(tipeActual, tipe);
+        Assert.assertEquals(deskripsiActual, deskripsi);
+
+    }
 }
