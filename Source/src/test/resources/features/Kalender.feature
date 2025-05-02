@@ -37,6 +37,7 @@ Feature: Kalender
     And I click the search button kalender
     And I edit kalender unit to "<newKalenderUnit>"
 
+    Given I reload the page
     When I enter "<newKalenderUnit>" in search column kalender
     And I click the search button kalender
     Then I should see a row "<newKalenderUnit>"
@@ -69,4 +70,4 @@ Feature: Kalender
 
     Examples:
       | name               | newTanggal | newTipe      | newDeskripsi         |
-      | Libur Cuti Bersama | 09/28/2024 | Cuti Bersama | Libur Lebaran Edited 2 |
+      | Libur Cuti Bersama | 09/29/2024 | Libur Nasional | Libur Lebaran Edited 2 |

@@ -36,6 +36,9 @@ public class Dashboard {
     @FindBy(xpath = "(//p[@class='MuiTypography-root MuiTypography-body1 css-aqx7sf'])[15]")
     WebElement kalender;
 
+    @FindBy(xpath = "//p[text()='Loading...']")
+    WebElement loadingReload;
+
     public Dashboard(WebDriver driver){
         PageFactory.initElements(driver, this);
     }

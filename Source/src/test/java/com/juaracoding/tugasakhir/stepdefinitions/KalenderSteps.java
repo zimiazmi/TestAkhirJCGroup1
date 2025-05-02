@@ -137,4 +137,10 @@ public class KalenderSteps {
         kalender.clickSimpan();
         WaitUtils.waitForSubmitToFinish(driver);
     }
+
+    @Given("I reload the page")
+    public void i_reload_the_page() {
+        driver.navigate().refresh();
+        WaitUtils.waitForLoadingReloadToFinish(driver);
+    }
 }

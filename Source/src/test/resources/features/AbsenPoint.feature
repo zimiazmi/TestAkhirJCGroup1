@@ -41,6 +41,13 @@
         | Name      | Latitude      | Longitude      | Radius      | Description      |
         | <newName> | <newLatitude> | <newLongitude> | <newRadius> | <newDescription> |
 
+      Given I reload the page
+      When I enter "<newName>" in search column
+      And I click the search button
+      Then I should see a row with:
+        | Name    | Latitude   | Longitude  | Radius   | Description   |
+        | <newName>  | <newLatitude> |<newLongitude> | <newRadius> | <newDescription> |
+
       Examples:
         | name        | newName            | newLatitude | newLongitude | newRadius | newDescription |
         | AbsenPoint1 | AbsenPoint1Update  | -6.123456   | 106.123456   | 120       | updated1       |
