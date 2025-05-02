@@ -84,6 +84,12 @@ public class KalenderSteps {
         Assert.assertEquals(actual, expected);
     }
 
+    @Then("I should see a empty row")
+    public void i_should_see_a_empty_row(){
+        List<WebElement> rows = driver.findElements(By.xpath("//*[@id='__next']/div/div/div/div[1]/div/div/div/div[2]/div/table/tbody/tr"));
+        Assert.assertTrue(rows.isEmpty(),"Expected no results");
+    }
+
     @And("I edit kalender unit to {string}")
     public void i_edit_kalender_unit_to(String newKalenderUnit){
         kalender.clickThreeDot();
@@ -143,4 +149,13 @@ public class KalenderSteps {
         driver.navigate().refresh();
         WaitUtils.waitForLoadingReloadToFinish(driver);
     }
+
+    @Then("I should see error message {string}")
+    public void i_should_see_error_message(String expectedMessage){
+        By errorMessage = By.xpath("//*[@id='name-helper-text']");
+        WaitUtils.waitForVisibility(driver, errorMessage, 10);
+        String actualMessage = kalender.getErrorMessageKalenderUnit();
+        Assert.assertEquals(actualMessage, expectedMessage);
+    }
+
 }

@@ -69,5 +69,39 @@ Feature: Kalender
     | <newTanggal> | <newTipe> | <newDeskripsi> |
 
     Examples:
-      | name               | newTanggal | newTipe      | newDeskripsi         |
+      | name               | newTanggal | newTipe        | newDeskripsi           |
       | Libur Cuti Bersama | 09/29/2024 | Libur Nasional | Libur Lebaran Edited 2 |
+
+  @Negative
+  Scenario Outline: Add kalender without kalender unit name
+    Given I am on the kalender page
+    When I input kalender data with kalender unit "<kalenderUnit>"
+    And I click the add button kalender
+    Then I should see error message "<expectedMessage>"
+
+    Examples:
+      | kalenderUnit     | expectedMessage                |
+      |                  | Nama kalender unit harus diini |
+
+  @Negative
+  Scenario Outline: Searching invalid data
+    Given I am on the kalender page
+    When I enter "<name>" in search column kalender
+    And I click the search button kalender
+    Then I should see a empty row
+
+    Examples:
+      | name                  |
+      | Kalender Unit Invalid |
+
+  @Negative
+  Scenario Outline: Edit kalender with blank name
+    Given I am on the kalender page
+    When I enter "<name>" in search column kalender
+    And I click the search button kalender
+    And I edit kalender unit to "<newKalenderUnit>"
+    Then I should see error message "<expectedMessage>"
+
+    Examples:
+      | name            | newKalenderUnit | expectedMessage                |
+      | Kalender Unit 1 |                 | Nama kalender unit harus diini |

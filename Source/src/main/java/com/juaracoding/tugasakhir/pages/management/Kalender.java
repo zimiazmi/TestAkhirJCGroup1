@@ -112,6 +112,9 @@ public class Kalender {
     @FindBy(xpath = "//button[@type='button' and text()='Tidak']")
     WebElement buttonDeleteConfirmNo;
 
+    @FindBy(xpath = "//*[@id='name-helper-text']")
+    WebElement errorMessageKalenderUnit;
+
     public Kalender(WebDriver driver){
         PageFactory.initElements(driver,this);
     }
@@ -241,6 +244,10 @@ public class Kalender {
 
     public WebElement getKolomSearch(){
         return kolomSearch;
+    }
+
+    public String getErrorMessageKalenderUnit(){
+        return errorMessageKalenderUnit.getText();
     }
 
     public void updateTanggalCuti(String newTanggal, String newTipe, String newDeskripsi) {

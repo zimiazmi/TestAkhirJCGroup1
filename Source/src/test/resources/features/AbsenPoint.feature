@@ -62,3 +62,15 @@
       Examples:
         | name        |
         | AbsenPoint2 |
+
+    @Negative
+    Scenario Outline: Add Absen Point with missing required fields
+      Given I am on the absen point page
+      When I input location point data with name "<name>" , latitude <latitude> , longitude <longitude> , radius <radius> , description "<description>"
+      And I click the add button
+      Then the form should not be submitted
+
+      Examples:
+        | name        | latitude  | longitude  | radius | description|
+        |             | -6.240723 | 106.835780 | 100    | test1      |
+        | AbsenPoint3 | -6.240723 | 106.835780 | 100    |            |

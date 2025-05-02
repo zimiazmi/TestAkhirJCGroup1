@@ -16,7 +16,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        tags = "@Positive",
+        tags = "@Positive or @Negative",
         features = {"src/test/resources/features"},
                 glue = {"com.juaracoding.tugasakhir.stepdefinitions", "com.juaracoding.tugasakhir.hooks"},
                 plugin = {"pretty","html:target/cucumber-reporting/reports.html",
