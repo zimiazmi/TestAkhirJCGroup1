@@ -24,6 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Locale;
 
 import static com.juaracoding.tugasakhir.utils.DriverSingleton.driver;
 
@@ -121,6 +122,10 @@ public class AbsenPoint {
         return kolomDescription;
     }
 
+    public WebElement getButtonDeleteConfirmYes(){
+        return buttonDeleteConfirmYes;
+    }
+
 
     public void fillColumnSearch(String name){
         kolomSearch.sendKeys(name);
@@ -141,9 +146,9 @@ public class AbsenPoint {
     public void fillLocationPointActions(String name, double latitude, double longitude, int radius, String description){
         actions.click(kolomName).sendKeys(name)
                 .pause(Duration.ofSeconds(1))
-                .click(kolomLatitude).sendKeys(String.format("%.6f", latitude))
+                .click(kolomLatitude).sendKeys(String.format(Locale.US,"%.6f", latitude))
                 .pause(Duration.ofSeconds(1))
-                .click(kolomLongitude).sendKeys(String.format("%.6f", longitude))
+                .click(kolomLongitude).sendKeys(String.format(Locale.US,"%.6f", longitude))
                 .pause(Duration.ofSeconds(1))
                 .click(kolomMaxRadius).sendKeys(String.valueOf(radius))
                 .pause(Duration.ofSeconds(1))

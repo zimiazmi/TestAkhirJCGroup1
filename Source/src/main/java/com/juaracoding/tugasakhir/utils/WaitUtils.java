@@ -71,6 +71,13 @@ public class WaitUtils {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingLocator));
     }
 
+    public static void waitForLoadingReloadToFinish(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        By loadingLocator = By.xpath("//p[text()='Loading...']");
+
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingLocator));
+    }
+
     public static void waitForNProgressToFinish(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         wait.until(driver1 -> {

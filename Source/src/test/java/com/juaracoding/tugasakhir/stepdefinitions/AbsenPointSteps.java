@@ -19,6 +19,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Wait;
@@ -66,6 +67,32 @@ public class AbsenPointSteps {
     public void i_click_the_add_button(){
         absenPoint.clickButtonTambah();
         WaitUtils.waitForSubmitToFinish(driver);
+    }
+
+    @Then("the form should not be submitted")
+    public void the_form_should_not_be_submitted(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Daftar ID field yang wajib diisi
+        String[] requiredFieldIds = { "name", "latitude", "longitude", "max_radius", "description" };
+
+        boolean foundInvalid = false;
+
+        for (String fieldId : requiredFieldIds) {
+            Boolean isValid = (Boolean) js.executeScript(
+                    "return document.getElementById(arguments[0]).checkValidity();", fieldId
+            );
+
+            System.out.println("Field '" + fieldId + "' validity: " + isValid);
+
+            if (!isValid) {
+                foundInvalid = true;
+                break;
+            }
+        }
+
+        // Validasi bahwa minimal satu field tidak valid
+        Assert.assertTrue(foundInvalid, "Expected at least one field to be invalid, but all were valid");
     }
 
     @When("I enter {string} in search column")
@@ -121,6 +148,7 @@ public class AbsenPointSteps {
     public void i_delete_absen_point_data(){
         absenPoint.clickThreeDot();
         absenPoint.clickDeleteButton();
+        WaitUtils.waitForElementToBeClickable(driver, absenPoint.getButtonDeleteConfirmYes(), 10);
         absenPoint.clickConfirmDeleteYes();
         WaitUtils.waitForSubmitToFinish(driver);
     }
