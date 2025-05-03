@@ -12,5 +12,276 @@ Version 1.0
 */
 
 
+import com.juaracoding.tugasakhir.utils.OSUtils;
+import com.juaracoding.tugasakhir.utils.WaitUtils;
+import org.checkerframework.checker.signature.qual.FieldDescriptor;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+import static com.juaracoding.tugasakhir.utils.DriverSingleton.driver;
+
 public class Kalender {
+
+    @FindBy(xpath = "//p [@class='MuiTypography-root MuiTypography-body1 css-1kei35f']")
+    WebElement headerKalender;
+
+    @FindBy(xpath = "//input[@id='search']")
+    WebElement kolomSearch;
+
+    @FindBy(xpath = "//button[text()='Reset']")
+    WebElement buttonReset;
+
+    @FindBy(xpath = "//button[text()='Search']")
+    WebElement buttonSearch;
+
+    @FindBy(xpath = "//button[text()='Tambahkan Kalender']")
+    WebElement buttonTambahkan;
+
+    @FindBy(xpath = "//input[@id='name']")
+    WebElement columnKalenderUnitName;
+
+    @FindBy(xpath = "//button[text()='Tambah']")
+    WebElement buttonTambah;
+
+    @FindBy(xpath = "//button[text()='Batal']")
+    WebElement buttonBatal;
+
+    @FindBy(xpath = "//*[@id='__next']/div/div/div/div[1]/div/div/div/div[2]/div/table/tbody/tr/td[1]/h6")
+    WebElement kalenderUnitNameTable;
+
+    @FindBy(xpath = "//*[@id='__next']/div/div/div/div[1]/div/div/div/div[2]/div/table/tbody/tr/td[2]/div/div/button")
+    WebElement threeDot;
+
+    @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[1]")
+    WebElement buttonView;
+
+    @FindBy(xpath = "//*[@id='__next']/div/div/div/div[1]/div/div/div/div[3]/div/table/tbody/tr/td[4]/div/div/button")
+    WebElement threeDotView;
+
+    @FindBy(xpath = "//*[@id='__next']/div/div/div/div[1]/div/div/div/div[3]/div/table/tbody/tr/td[1]")
+    WebElement viewTanggal;
+
+    @FindBy(xpath = "//*[@id='__next']/div/div/div/div[1]/div/div/div/div[3]/div/table/tbody/tr/td[2]")
+    WebElement viewTipe;
+
+    @FindBy(xpath = "//*[@id='__next']/div/div/div/div[1]/div/div/div/div[3]/div/table/tbody/tr/td[3]")
+    WebElement viewDeskripsi;
+
+    @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[1]")
+    WebElement buttonViewEdit;
+
+    @FindBy(xpath = "//input[@placeholder='dd/mm/yyyy']")
+    WebElement columnTanggal;
+
+    @FindBy(xpath = "//div[@id='type']")
+    WebElement columnPilihTipeCuti;
+
+    @FindBy(xpath = "//li[@data-value='cuti_bersama']")
+    WebElement columnCutiBersama;
+
+    @FindBy(xpath = "//li[@data-value='libur_nasional']")
+    WebElement columnLiburNasional;
+
+    @FindBy(xpath = "//input[@id='description']")
+    WebElement columnDescription;
+
+    @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[2]")
+    WebElement buttonViewDelete;
+
+    @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[2]")
+    WebElement buttonEdit;
+
+    @FindBy(xpath = "//*[@id='card-actions-menu']/div[3]/ul/li[3]")
+    WebElement buttonDelete;
+
+    @FindBy(xpath = "//button[text()='Simpan']")
+    WebElement buttonSimpan;
+
+    @FindBy(xpath = "//button[@type='submit' and text()='Ya']")
+    WebElement buttonDeleteConfirmYes;
+
+    @FindBy(xpath = "//button[@type='button' and text()='Tidak']")
+    WebElement buttonDeleteConfirmNo;
+
+    @FindBy(xpath = "//*[@id='name-helper-text']")
+    WebElement errorMessageKalenderUnit;
+
+    public Kalender(WebDriver driver){
+        PageFactory.initElements(driver,this);
+    }
+
+    public String getHeaderKalender(){
+        return headerKalender.getText();
+    }
+
+    public void fillColumnSearch(String search){
+        kolomSearch.click();
+        kolomSearch.clear();
+        kolomSearch.sendKeys(search);
+    }
+
+    public void clickButtonReset(){
+        buttonReset.click();
+    }
+
+    public void clickButtonSearch(){
+        buttonSearch.click();
+    }
+
+    public String getNameKalenderUnit(){
+        return kalenderUnitNameTable.getText();
+    }
+
+    public void clickButtonTambahkanKalender(){
+        buttonTambahkan.click();
+    }
+
+    public void fillKalenderUnit(String nameKalender){
+        columnKalenderUnitName.sendKeys(nameKalender);
+    }
+
+    public void updateKalenderUnit(String nameKalenderUpdate){
+        Keys controlKey = OSUtils.isWindows() ? Keys.CONTROL : Keys.COMMAND;
+        columnKalenderUnitName.sendKeys(controlKey + "a");
+        columnKalenderUnitName.sendKeys(Keys.DELETE);
+        columnKalenderUnitName.sendKeys(nameKalenderUpdate);
+    }
+
+    public void clickTambah(){
+        buttonTambah.click();
+    }
+
+    public void clickBatal(){
+        buttonBatal.click();
+    }
+
+    public void clickThreeDot() {
+        By threeDotLocator = By.xpath("//*[@id='__next']/div/div/div/div[1]/div/div/div/div[2]/div/table/tbody/tr/td[2]/div/div/button");
+        WaitUtils.waitForElementPresence(driver, threeDotLocator, 60);
+        WebElement threeDotElement = WaitUtils.waitForElementToBeClickableBy(driver, threeDotLocator, 60);
+        threeDotElement.click();
+    }
+
+    public void clickThreeDotView() {
+        By threeDotViewLocator = By.xpath("//*[@id='__next']/div/div/div/div[1]/div/div/div/div[3]/div/table/tbody/tr/td[4]/div/div/button");
+        WaitUtils.waitForElementPresence(driver, threeDotViewLocator, 60);
+        WebElement threeDotViewElement = WaitUtils.waitForElementToBeClickableBy(driver, threeDotViewLocator, 60);
+        threeDotViewElement.click();
+    }
+
+    public void clickView() {
+        By viewLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[1]");
+        WaitUtils.waitForElementPresence(driver, viewLocator, 60);
+        WebElement viewElement = WaitUtils.waitForElementToBeClickableBy(driver, viewLocator, 60);
+        viewElement.click();
+    }
+
+    public void fillTanggal(String date){
+        columnTanggal.sendKeys(date);
+    }
+
+    public void fillDeskripsi(String desc){
+        columnDescription.sendKeys(desc);
+    }
+
+    public void clickSimpan(){
+        buttonSimpan.click();
+    }
+
+    public void clickDeleteView(){
+        buttonViewDelete.click();
+    }
+
+    public void clickEditButton() {
+        By editButtonLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[2]");
+        WaitUtils.waitForElementPresence(driver, editButtonLocator, 20);
+        WebElement editbuttonElement = WaitUtils.waitForElementToBeClickableBy(driver, editButtonLocator, 20);
+        editbuttonElement.click();
+    }
+
+    public void clickEditViewButton() {
+        By editButtonViewLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[1]");
+        WaitUtils.waitForElementPresence(driver, editButtonViewLocator, 20);
+        WebElement editbuttonViewElement = WaitUtils.waitForElementToBeClickableBy(driver, editButtonViewLocator, 20);
+        editbuttonViewElement.click();
+    }
+
+    public void clickDeleteButton() {
+        By deleteButtonLocator = By.xpath("//*[@id='card-actions-menu']/div[3]/ul/li[3]");
+        WaitUtils.waitForElementPresence(driver, deleteButtonLocator, 20);
+        WebElement deletebuttonElement = WaitUtils.waitForElementToBeClickableBy(driver, deleteButtonLocator, 20);
+        deletebuttonElement.click();
+    }
+
+    public void clickConfirmDeleteYes(){
+        buttonDeleteConfirmYes.click();
+    }
+
+    public String getTanggalView(){
+        return viewTanggal.getText();
+    }
+
+    public String getTipeView(){
+        return viewTipe.getText();
+    }
+
+    public String getDeskripsiView(){
+        return viewDeskripsi.getText();
+    }
+
+    public WebElement getButtonDeleteConfirmYes(){
+        return buttonDeleteConfirmYes;
+    }
+
+    public WebElement getKolomSearch(){
+        return kolomSearch;
+    }
+
+    public String getErrorMessageKalenderUnit(){
+        return errorMessageKalenderUnit.getText();
+    }
+
+    public void updateTanggalCuti(String newTanggal, String newTipe, String newDeskripsi) {
+
+        Keys controlKey = OSUtils.isWindows() ? Keys.CONTROL : Keys.COMMAND;
+
+        By tanggalLocator = By.xpath("//input[starts-with(@id, 'mui-')]");
+        WaitUtils.waitForElementPresence(driver, tanggalLocator, 60);
+        WebElement tanggalElement = WaitUtils.waitForElementToBeClickableBy(driver, tanggalLocator, 60);
+        tanggalElement.click();
+        tanggalElement.sendKeys(controlKey + "a");
+        tanggalElement.sendKeys(Keys.DELETE);
+        tanggalElement.sendKeys(newTanggal);
+
+        switch (newTipe.toUpperCase()) {
+            case "CUTI BERSAMA":
+                columnPilihTipeCuti.click();
+                columnCutiBersama.click();
+                break;
+            case "LIBUR NASIONAL":
+                columnPilihTipeCuti.click();
+                columnLiburNasional.click();
+                break;
+            default:
+                System.out.println("Tipe cuti " + newTipe + " tidak valid");
+        }
+
+        columnDescription.sendKeys(controlKey + "a");
+        columnDescription.sendKeys(Keys.DELETE);
+        fillDeskripsi(newDeskripsi);
+
+    }
+
+
+
+
 }

@@ -12,13 +12,17 @@ Version 1.0
 */
 
 
+import com.juaracoding.tugasakhir.pages.dashboard.Dashboard;
 import com.juaracoding.tugasakhir.pages.login.LoginPage;
 import com.juaracoding.tugasakhir.utils.Constants;
 import com.juaracoding.tugasakhir.utils.DriverSingleton;
+import com.juaracoding.tugasakhir.utils.WaitUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 import java.time.Duration;
 
@@ -26,11 +30,13 @@ public class LoginSteps {
 
     private WebDriver driver;
     private LoginPage loginPage;
+    private Dashboard dashboard;
 
     public LoginSteps(){
         this.driver = DriverSingleton.getDriver();
 
         this.loginPage = new LoginPage(driver);
+        this.dashboard = new Dashboard(driver);
     }
 
     @Given("I am on the login page")
@@ -48,6 +54,12 @@ public class LoginSteps {
     @And("I click the login button")
     public void i_click_the_login_button(){
         loginPage.clickButtonMasuk();
+        WaitUtils.waitForNProgressToFinish(driver);
+    }
+
+    @Then("I should see the {string}")
+    public void i_should_see_the (String expectedResult) {
+        Assert.assertEquals(dashboard.getTextDashboardMenu(), expectedResult);
     }
 
 }
